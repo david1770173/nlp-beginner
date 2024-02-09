@@ -32,16 +32,16 @@ class Net:
         Returns:
             _type_:output
         """
-        data = X
+        data = X.reshape(1,-1)
         for layer in self.layers:
             data = layer.forward(data)
         return data
 
-    def train(self, X, Y, epochs = 100, learning_rate = 0.0001,report_frequency = 100):
+    def train(self, X, Y, epochs = 10, learning_rate = 0.0001,report_frequency = 500):
         """updating weights and bias of each layer(activation layer excluded since they don't have W and B)
 
         Args:
-            X (_type_): input
+            X (_type_): inputs
             Y (_type_): output
             epochs (int, optional): as its name. Defaults to 100.
             learning_rate (float, optional): how fast the NN learns, . Defaults to 0.0001.
@@ -57,5 +57,5 @@ class Net:
                 error = self.loss_prime(Y[j], data)
                 for layer in reversed(self.layers):
                     error = layer.backward(error, learning_rate)
-            if (i+1) % report_frequency == 0:
+            if (j+1) % report_frequency == 0:
                 print("the mean loss of epoch", i+1, "=", err/len(X))
