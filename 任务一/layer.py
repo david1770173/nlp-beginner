@@ -1,9 +1,20 @@
 import numpy as np
 class Layer:
     def forward(self):
+        """
+        return Y = X·W +B
+        Raises:
+            NotImplementedError: _description_
+        """
         raise NotImplementedError
 
     def backward(self):
+        """_
+        return dE/dX of this layer, will be used as dE/dY of the previous layer
+        do gradient descent if this is not a activation layer
+        Raises:
+            NotImplementedError: _description_
+        """
         raise NotImplementedError
 
 class FC_Layer(Layer):
@@ -27,7 +38,6 @@ class FC_Layer(Layer):
         bias_error = output_error
         input_error = np.dot(output_error, self.weights.T)
         weights_error = np.dot(self.input.T, output_error)
-        #print("dsafa",self.weights,"lkhgjljkg", weights_error)
         self.weights = self.weights - learning_rate * weights_error
         self.bias = self.bias - learning_rate * bias_error
         return input_error
